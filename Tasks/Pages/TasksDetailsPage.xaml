@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Tasks.Pages.TasksDetailsPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+
+            <Label
+                Text="Viewing Task Details"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" />
+
+            <StackLayout Padding="20">
+
+                <!-- Id -->
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Id" FontAttributes="Bold" />
+                    <Label Text="{Binding Task.Id}" Margin="10,0,0,0" />
+                </StackLayout>
+
+                <!-- Title -->
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Title" FontAttributes="Bold" />
+                    <Label Text="{Binding Task.Title}" Margin="10,0,0,0" />
+                </StackLayout>
+
+                <!-- Description -->
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Description" FontAttributes="Bold" />
+                    <Label Text="{Binding Task.Description}" Margin="10,0,0,0" />
+                </StackLayout>
+
+                <!-- Username -->
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Username" FontAttributes="Bold" />
+                    <Label Text="{Binding Task.Username}" Margin="10,0,0,0" />
+                </StackLayout>
+
+                <!-- CreatedDate -->
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="CreatedDate" FontAttributes="Bold" />
+                    <Label Text="{Binding Task.CreatedDate}" Margin="10,0,0,0" />
+                </StackLayout>
+
+                <!-- UpdatedDate -->
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="UpdatedDate" FontAttributes="Bold" />
+                    <Label Text="{Binding Task.UpdatedDate}" Margin="10,0,0,0" />
+                </StackLayout>
+
+                <!-- UpdatedDate -->
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="UpdatedDate" FontAttributes="Bold" />
+                    <Label Text="{Binding Task.UpdatedDate}" Margin="10,0,0,0" />
+                </StackLayout>
+
+                <!-- Status -->
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Status" FontAttributes="Bold" />
+                    <Label Text="{Binding Task.Status}" Margin="10,0,0,0" />
+                </StackLayout>
+                
+                <!-- Back button -->
+                <Button Text="Back" Clicked="BackClicked" HorizontalOptions="Center" />
+            </StackLayout>
+            
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
