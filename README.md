@@ -36,5 +36,4 @@ Conducting tests and debugging on different platforms;
 <br>
 <br>
 <br>
-### Screenshots:
-![PRINT1](Tasks/Resources/Images/print1.png)
+## Screenshots on Images Folder
