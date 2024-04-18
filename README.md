@@ -33,3 +33,8 @@ Develop a basic task management application using .NET MAUI.
 Setup the mobile device as a debugger;
 <br>
 Conducting tests and debugging on different platforms;
+<br>
+<br>
+<br>
+### Screenshots:
+![PRINT1](Tasks/Resources/Images/print1.png)
