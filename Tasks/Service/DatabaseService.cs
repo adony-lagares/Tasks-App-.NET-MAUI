@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SQLite;
+﻿using SQLite;
 
 namespace Tasks.Service
 {
     public class DatabaseService<T> where T : new()
     {
-        SQLiteAsyncConnection _database;
+        private SQLiteAsyncConnection _database;
 
-        public DatabaseService(string dbPath) 
+        public DatabaseService(string dbPath)
         {
             _database = new SQLiteAsyncConnection(dbPath);
             _database.CreateTableAsync<T>().Wait();
@@ -34,6 +30,11 @@ namespace Tasks.Service
         public Task<List<T>> AllAsync()
         {
             return _database.Table<T>().ToListAsync();
+        }
+
+        public AsyncTableQuery<T> Query()
+        {
+            return _database.Table<T>();
         }
 
         public Task<int> QuantityAsync(T item)

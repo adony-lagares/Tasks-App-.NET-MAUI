@@ -14,7 +14,7 @@ namespace Tasks.Service
 
         private List<User> _users = new List<User>();
 
-        private UsersService() 
+        private UsersService()
         {
             _users.Add(new User { Id = 1, Name = "Ádony" });
             _users.Add(new User { Id = 2, Name = "Kaiky" });
@@ -31,10 +31,5 @@ namespace Tasks.Service
         {
             return _users;
         }
-
-
-
-
-
     }
 }

@@ -1,73 +1,163 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Tasks.Pages.TasksDetailsPage">
+             x:Class="Tasks.Pages.TasksDetailsPage"
+             Title="Viewing Task Details">
 
     <ScrollView>
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
 
-            <Label
-                Text="Viewing Task Details"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
+            <Frame
+                CornerRadius="10"
+                Padding="15"
+                HasShadow="True"
+                BackgroundColor="#ffffff">
 
-            <StackLayout Padding="20">
+                <StackLayout Padding="20">
 
-                <!-- Id -->
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="Id" FontAttributes="Bold" />
-                    <Label Text="{Binding Task.Id}" Margin="10,0,0,0" />
+                    <!-- Title -->
+                    <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+                        <Label Text="Title" FontAttributes="Bold" />
+                        <Label x:Name="LabelTitle" Text="{Binding Task.Title}" Margin="10,0,0,0" />
+                    </StackLayout>
+
+                    <!-- Username -->
+                    <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+                        <Label Text="Username" FontAttributes="Bold" />
+                        <Label x:Name="LabelUsername" Text="{Binding Task.Username}" Margin="10,0,0,0" />
+                    </StackLayout>
+
+                    <!-- CreatedDate -->
+                    <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+                        <Label Text="CreatedDate" FontAttributes="Bold" />
+                        <Label x:Name="LabelCreatedDate" Text="{Binding Task.CreatedDate}" Margin="10,0,0,0" />
+                    </StackLayout>
+
+                    <!-- UpdatedDate -->
+                    <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+                        <Label Text="UpdatedDate" FontAttributes="Bold" />
+                        <Label x:Name="LabelUpdatedDate" Text="{Binding Task.UpdatedDate}" Margin="10,0,0,0" />
+                    </StackLayout>
+
+                    <!-- Status -->
+                    <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+                        <Label Text="Status" FontAttributes="Bold" />
+                        <Label x:Name="LabelStatus" Text="{Binding Task.Status}" Margin="10,0,0,0" />
+                    </StackLayout>
+
+                    <!-- Description -->
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Description" FontAttributes="Bold" />
+                        <Label x:Name="LabelDescription" Text="{Binding Task.Description}" Margin="10,0,0,0" />
+                    </StackLayout>
+
+                    <BoxView HeightRequest="2" BackgroundColor="LightGray" Margin="0,10" />
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <!-- For the buttons Change and Delete buttons -->
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <!-- 50% for the Change button -->
+                            <ColumnDefinition Width="*" />
+                            <!-- 50% for the Delete button -->
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Change Button -->
+                        <Button Grid.Row="0" Grid.Column="0"
+                            Text="Change"
+                            BackgroundColor="#FFCC00"
+                            TextColor="Black"
+                            Clicked="ChangeClicked"
+                            Margin="0,0,0,0" />
+                        <!-- Delete Button -->
+                        <Button Grid.Row="0" Grid.Column="1"
+                            Text="Delete"
+                            BackgroundColor="Red"
+                            TextColor="White"
+                            Clicked="DeleteClicked"
+                            Margin="5,0,0,0" />
+                    </Grid>
+
+                    <Button Text="Take Picture"
+                            BackgroundColor="#6495ED"
+                            Clicked="TakePictureClicked"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="End"
+                            Margin="0,10,0,0" />
+
+                    <BoxView HeightRequest="2" BackgroundColor="LightGray" Margin="0,10" />
+
+                    <!-- Back button -->
+                    <Button Text="Back"
+                        BackgroundColor="Gray"
+                        Clicked="BackClicked"
+                        HorizontalOptions="FillAndExpand" />
                 </StackLayout>
+            </Frame>
 
-                <!-- Title -->
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="Title" FontAttributes="Bold" />
-                    <Label Text="{Binding Task.Title}" Margin="10,0,0,0" />
-                </StackLayout>
+            <Frame x:Name="FilesFrame"
+                   CornerRadius="10"
+                   Padding="15"
+                   HasShadow="True"
+                   Margin="0,20,0,0"
+                   BackgroundColor="#ffffff">
+                <StackLayout Spacing="5">
+                    <Label Text="Files" FontAttributes="Bold" FontSize="Medium" />
 
-                <!-- Description -->
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="Description" FontAttributes="Bold" />
-                    <Label Text="{Binding Task.Description}" Margin="10,0,0,0" />
+                    <!--Files view area-->
+                    <CollectionView x:Name="FilesCollection">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Padding="2" Margin="0,0,0,20">
+                                    <Image Source="{Binding File}"
+                                           Aspect="AspectFill"
+                                           HorizontalOptions="FillAndExpand" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </StackLayout>
+            </Frame>
 
-                <!-- Username -->
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="Username" FontAttributes="Bold" />
-                    <Label Text="{Binding Task.Username}" Margin="10,0,0,0" />
-                </StackLayout>
+            <Frame
+                 CornerRadius="10"
+                 Padding="15"
+                 HasShadow="True"
+                 BackgroundColor="#ffffff">
+                <StackLayout Spacing="10">
+                    <Label Text="Comments" FontAttributes="Bold" FontSize="Medium" />
 
-                <!-- CreatedDate -->
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="CreatedDate" FontAttributes="Bold" />
-                    <Label Text="{Binding Task.CreatedDate}" Margin="10,0,0,0" />
-                </StackLayout>
+                    <!--Editor for a new comment-->
+                    <Editor x:Name="NewCommentEditor" Placeholder="Add an comment..." HeightRequest="50" />
 
-                <!-- UpdatedDate -->
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="UpdatedDate" FontAttributes="Bold" />
-                    <Label Text="{Binding Task.UpdatedDate}" Margin="10,0,0,0" />
-                </StackLayout>
+                    <!--Picker for User select-->
+                    <Picker x:Name="UserPicker" Title="Select the user" ItemDisplayBinding="{Binding Name}" />
 
-                <!-- UpdatedDate -->
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="UpdatedDate" FontAttributes="Bold" />
-                    <Label Text="{Binding Task.UpdatedDate}" Margin="10,0,0,0" />
-                </StackLayout>
+                    <!--Add the comment button-->
+                    <Button Text="Add comment" Clicked="AddCommentClicked" />
 
-                <!-- Status -->
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="Status" FontAttributes="Bold" />
-                    <Label Text="{Binding Task.Status}" Margin="10,0,0,0" />
+                    <!--Comment view area-->
+                    <CollectionView x:Name="CommentsCollection">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Padding="10" BackgroundColor="#f0f0f0">
+                                    <Label Text="{Binding Text}" FontAttributes="Italic" />
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="5">
+                                        <Label Text="{Binding Username}" HorizontalOptions="Start" FontAttributes="Bold" />
+                                        <Label Text="{Binding Date, StringFormat='{0:dd/MM/yyyy HH:mm}'}" HorizontalOptions="EndAndExpand" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </StackLayout>
-                
-                <!-- Back button -->
-                <Button Text="Back" Clicked="BackClicked" HorizontalOptions="Center" />
-            </StackLayout>
-            
+            </Frame>
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>

@@ -9,11 +9,11 @@ namespace Tasks.Constants
     public struct Db
     {
         public static string DB_PATH
+        {
+            get
             {
-                get
-                {
-                    return Path.Combine(FileSystem.AppDataDirectory, "tasks.db3");
-                }
+                return Path.Combine(FileSystem.AppDataDirectory, "tasks.db3");
             }
+        }
     }
 }

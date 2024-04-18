@@ -15,8 +15,7 @@
                 SemanticProperties.HeadingLevel="Level1" />
 
             <StackLayout Padding="20">
-                <Entry x:Name="TitleEntry" Placeholder="Title" Text="{Binding Title}"/>
-
+                <Entry x:Name="TitleEntry" Placeholder="Title" Text="{Binding Title}" />
 
                 <Picker x:Name="StatusPicker" Title="Select Status" SelectedItem="{Binding Status}">
                     <Picker.ItemsSource />
@@ -28,20 +27,17 @@
                     </Picker.ItemDisplayBinding>
                 </Picker>
 
-
-                <Editor x:Name="DescriptionEditor" Placeholder="Description" HeightRequest="100" AutoSize="TextChanges" Text="{Binding Description}"/>
-
+                <Editor x:Name="DescriptionEditor" Placeholder="Description" HeightRequest="100" AutoSize="TextChanges" Text="{Binding Description}" />
 
                 <!-- Save button -->
-                <Button Text="Save" Clicked="OnSaveClicked"/>
-                
-            </StackLayout>
-
+                <Button Text="Save" Clicked="OnSaveClicked" />
 
                 <!-- Back button -->
-            <Button Text="Back" Clicked="BackClicked" HorizontalOptions="Center" />
-
+                <Button Text="Back"
+                        BackgroundColor="Gray"
+                        Clicked="BackClicked"
+                        HorizontalOptions="FillAndExpand" />
+            </StackLayout>
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>

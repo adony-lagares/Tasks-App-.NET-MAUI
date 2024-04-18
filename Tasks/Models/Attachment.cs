@@ -4,21 +4,16 @@ using Tasks.Service;
 
 namespace Tasks.Models
 {
-    public class TaskModelMain
+    public class Attachment
     {
-        public TaskModelMain()
-        {
-            this.UpdatedDate = DateTime.Now;
-            this.CreatedDate = DateTime.Now;
-        }
-
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime UpdatedDate { get; set; }
+        public string File { get; set; }
+
+        public int TaskId { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
         public int UserId { get; set; }
 
         [Ignore]
@@ -37,10 +32,8 @@ namespace Tasks.Models
             get
             {
                 if (this.User == null) return "User register empty.";
-                return User?.Name;
+                return User.Name;
             }
         }
-
-        public Status? Status { get; set; }
     }
 }

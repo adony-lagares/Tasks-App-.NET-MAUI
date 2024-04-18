@@ -4,21 +4,18 @@ using Tasks.Service;
 
 namespace Tasks.Models
 {
-    public class TaskModelMain
+    public class Comment
     {
-        public TaskModelMain()
+        public Comment()
         {
-            this.UpdatedDate = DateTime.Now;
-            this.CreatedDate = DateTime.Now;
+            this.Date = DateTime.Now;
         }
 
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime UpdatedDate { get; set; }
+        public string Text { get; set; }
+        public DateTime Date { get; set; }
+        public int TaskId { get; set; }
         public int UserId { get; set; }
 
         [Ignore]
@@ -37,10 +34,8 @@ namespace Tasks.Models
             get
             {
                 if (this.User == null) return "User register empty.";
-                return User?.Name;
+                return User.Name;
             }
         }
-
-        public Status? Status { get; set; }
     }
 }
