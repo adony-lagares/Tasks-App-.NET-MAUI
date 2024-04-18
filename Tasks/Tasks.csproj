@@ -21,10 +21,10 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>Tasks</ApplicationTitle>
+		<ApplicationTitle>TaskList App</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.tasks</ApplicationId>
+		<ApplicationId>com.adonylagares.tasks</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
