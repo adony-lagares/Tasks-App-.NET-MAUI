@@ -1,4 +1,5 @@
-﻿using Tasks.Constants;
+﻿using System.Linq.Expressions;
+using Tasks.Constants;
 using Tasks.Models;
 using Tasks.Service;
 using static Microsoft.Maui.ApplicationModel.Permissions;
@@ -36,6 +37,7 @@ public partial class TasksDetailsPage : ContentPage
 
         LoadComments();
         LoadFiles();
+        LoadLocations();
     }
 
     private async void LoadFiles()
@@ -48,7 +50,20 @@ public partial class TasksDetailsPage : ContentPage
             return;
         }
 
-        FilesCollection.IsVisible = false;
+        FilesFrame.IsVisible = false;
+    }
+
+    private async void LoadLocations()
+    {
+        var locations = await _attachmentService.Query().Where(a => a.TaskId == Task.Id && string.IsNullOrEmpty(a.File)).ToListAsync();
+        if (locations.Count > 0)
+        {
+            LocationFrame.IsVisible = true;
+            LocationCollection.ItemsSource = locations;
+            return;
+        }
+
+        LocationFrame.IsVisible = false;
     }
 
     private async void LoadComments()
@@ -119,6 +134,83 @@ public partial class TasksDetailsPage : ContentPage
         {
             await _taskService.DeleteAsync(Task);
             await Navigation.PopAsync();
+        }
+    }
+
+    private async void LabelLinkGoogleMaps_Tapped(object sender, EventArgs e)
+    {
+        var label = sender as Label;
+        if (label != null)
+        {
+            var url = label.Text.Split('-')[1].Trim();
+            if (!string.IsNullOrWhiteSpace(url))
+            {
+                await Launcher.OpenAsync(new Uri(url));
+            }
+        }
+    }
+
+    private async void GPSClicked(object sender, EventArgs e)
+    {
+        var confirm = await DisplayAlert("Location", $"Confirm the capture of your location?", "Locate", "Cancel");
+        if (confirm)
+        {
+            LocationButton.Text = "Loading...";
+            LocationButton.IsEnabled = false;
+
+            try
+            {
+                var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+                if (status != PermissionStatus.Granted)
+                {
+                    status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                    if (status != PermissionStatus.Granted)
+                    {
+                        await DisplayAlert("Location Permission", "Location access permission not granted.", "OK");
+                        LocationButton.Text = "Locate";
+                        LocationButton.IsEnabled = true;
+                        return;
+                    }
+                }
+
+                var request = new GeolocationRequest(GeolocationAccuracy.Medium);
+                var location = await Geolocation.GetLocationAsync(request);
+
+                if (location != null)
+                {
+                    await _attachmentService.IncludeAsync(new Attachment
+                    {
+                        Latitude = location.Latitude,
+                        Longitude = location.Longitude,
+                        TaskId = Task.Id,
+                    });
+
+                    LoadLocations();
+
+                    await DisplayAlert("Location", $"Latitude: {location.Latitude}, Longitude: {location.Longitude}", "Close");
+                }
+            }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+                await DisplayAlert("Error", "GPS not supported on that device - " + fnsEx.Message, "OK");
+            }
+            catch (FeatureNotEnabledException fneEx)
+            {
+                await DisplayAlert("Error", "GPS not enabled. - " + fneEx.Message, "OK");
+            }
+            catch (PermissionException pEx)
+            {
+                await DisplayAlert("Error", "GPS permission denied. - " + pEx.Message, "OK");
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", "Unable to get location. - " + ex.Message, "OK");
+            }
+            finally
+            {
+                LocationButton.Text = "Locate";
+                LocationButton.IsEnabled = true;
+            }
         }
     }
 

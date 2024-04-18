@@ -30,7 +30,7 @@
                 <Editor x:Name="DescriptionEditor" Placeholder="Description" HeightRequest="100" AutoSize="TextChanges" Text="{Binding Description}" />
 
                 <!-- Save button -->
-                <Button Text="Save" Clicked="OnSaveClicked" />
+                <Button Text="Save" Clicked="OnSaveClicked" Margin="0,0,0,5"/>
 
                 <!-- Back button -->
                 <Button Text="Back"

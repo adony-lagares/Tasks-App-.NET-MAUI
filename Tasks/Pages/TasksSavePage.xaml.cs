@@ -9,7 +9,7 @@ public partial class TasksSavePage : ContentPage
 {
     private DatabaseService<TaskModelMain> _taskService;
 
-    public TaskModelMain Task { get; set; }
+    public TaskModelMain SelectedTask { get; set; }
 
     public TasksSavePage(TaskModelMain task)
     {
@@ -20,7 +20,7 @@ public partial class TasksSavePage : ContentPage
         var status = task.Status;
         var user = task.User;
 
-        Task = task;
+        SelectedTask = task;
         BindingContext = task;
 
         StatusPicker.ItemsSource = Enum.GetValues(typeof(Status)).Cast<Status>().ToList();
@@ -28,6 +28,14 @@ public partial class TasksSavePage : ContentPage
 
         StatusPicker.SelectedItem = status;
         UserPicker.SelectedItem = user;
+
+        this.Appearing += OnPageAppearing;
+    }
+
+    private async void OnPageAppearing(object sender, EventArgs e)
+    {
+        await Task.Delay(100);
+        TitleEntry.Focus();
     }
 
     private async void OnSaveClicked(object sender, EventArgs e)
@@ -39,23 +47,23 @@ public partial class TasksSavePage : ContentPage
             return;
         }
 
-        Task.Title = TitleEntry.Text;
-        Task.Description = DescriptionEditor.Text;
+        SelectedTask.Title = TitleEntry.Text;
+        SelectedTask.Description = DescriptionEditor.Text;
 
         if (StatusPicker.SelectedItem != null)
-            Task.Status = (Status)StatusPicker.SelectedItem;
+            SelectedTask.Status = (Status)StatusPicker.SelectedItem;
         else
-            Task.Status = Status.Backlog;
+            SelectedTask.Status = Status.Backlog;
 
         if (UserPicker.SelectedItem != null)
-            Task.UserId = ((User)UserPicker.SelectedItem).Id;
+            SelectedTask.UserId = ((User)UserPicker.SelectedItem).Id;
 
-        if (Task.Id == 0)
-            await _taskService.IncludeAsync(Task);
+        if (SelectedTask.Id == 0)
+            await _taskService.IncludeAsync(SelectedTask);
         else
         {
-            Task.UpdatedDate = DateTime.Now;
-            await _taskService.ChangeAsync(Task);
+            SelectedTask.UpdatedDate = DateTime.Now;
+            await _taskService.ChangeAsync(SelectedTask);
         }
         await Navigation.PopAsync();
     }
